@@ -94,15 +94,6 @@ ApplicationWindow {
                 }
             }
         }
-
-        Image {
-            id: imgSightBackup
-            anchors.horizontalCenter: imgSight.horizontalCenter
-            anchors.verticalCenter: imgSight.verticalCenter
-            smooth: false
-            source: "sight.svg"
-            visible: false
-        }
     }
 
     Text {
@@ -147,55 +138,19 @@ ApplicationWindow {
         id: sightChange
         ScriptAction {
             script: {
-                imgSightBackup.visible = true;
-                imgSight.visible = false;
-                imgSightBackup.scale = imgSight.scale;
-                imgSightBackup.rotation = imgSight.rotation;
+                imgSight.opacity = 0;
+            }
+        }
+        PropertyAnimation {
+            target: imgSight
+            property: "opacity"
+            to: 0
+            duration: 500
+        }
+        ScriptAction {
+            script: {
                 imgAngle = 90 * (Math.floor(Math.random() * 10) % 4);
-            }
-        }
-        ParallelAnimation {
-            PropertyAnimation {
-                target: imgSightBackup
-                property: "scale"
-                easing.type: "InExpo"
-                to: 10
-                duration: 300
-            }
-            PropertyAnimation {
-                target: imgSightBackup
-                property: "opacity"
-                easing.type: "InExpo"
-                to: 0
-                duration: 300
-            }
-        }
-        ScriptAction {
-            script: {
-                imgSightBackup.scale = 0;
-                imgSightBackup.rotation = imgAngle;
-            }
-        }
-        ParallelAnimation {
-            PropertyAnimation {
-                target: imgSightBackup
-                property: "scale"
-                easing.type: "OutExpo"
-                to: imgSight.scale
-                duration: 200
-            }
-            PropertyAnimation {
-                target: imgSightBackup
-                property: "opacity"
-                easing.type: "OutExpo"
-                to: 1
-                duration: 200
-            }
-        }
-        ScriptAction {
-            script: {
-                imgSight.visible = true;
-                imgSightBackup.visible = false
+                imgSight.opacity = 100;
             }
         }
     }
